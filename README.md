@@ -1,26 +1,26 @@
-
+# Annual sales data
 sales <- c(120,125,132,140,151,160,172,185,197,210)
 
 # Create time series
-x <- ts(sales, start=2015)
+sales.ts <- ts(sales, start=2015, frequency=1)
 
-# Original series
-plot(x, type="o", col="blue", main="Original Time Series")
+# Plot original data
+plot(sales.ts, type="o", col="blue", main="Annual Sales")
 
-# First difference
-d <- diff(x)
-plot(d, type="o", col="red", main="First-Order Difference")
-
-# ACF and PACF
-acf(d, main="ACF")
-pacf(d, main="PACF")
-
-# Fit ARIMA(0,1,1)
+# Load package
 library(forecast)
-fit <- Arima(x, order=c(0,1,1))
+
+# Fit ARIMA model
+fit <- Arima(sales.ts, order=c(0,1,1))
+
+# Display summary
 summary(fit)
 
 # Forecast next 5 years
-f <- forecast(fit, h=5)
-f
-plot(f, main="ARIMA(0,1,1) Forecast")
+future <- forecast(fit,h=5)
+
+# Display forecast
+future
+
+# Plot forecast
+plot(future, main="5-Year Forecast Using ARIMA")
